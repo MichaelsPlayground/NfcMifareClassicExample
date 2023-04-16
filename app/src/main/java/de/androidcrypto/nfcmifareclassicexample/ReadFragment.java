@@ -424,12 +424,15 @@ public class ReadFragment extends Fragment implements NfcAdapter.ReaderCallback 
         sb.append("MifareClassic type: ").append(ttype).append("\n");
         int tagSize = mfc.getSize();
         sb.append("MifareClassic size: ").append(tagSize).append("\n");
+        // for details see: https://android.googlesource.com/platform/frameworks/base/+/48a5ed5/core/java/android/nfc/tech/MifareClassic.java
+        // size could be 320 / SIZE_MINI, 1024 / SIZE_1K, 2048 / SIZE_2K or 4096 / SIZE_4K
         int sectorCount = mfc.getSectorCount();
         sb.append("MifareClassic sector count: ").append(sectorCount).append("\n");
         int blockCount = mfc.getBlockCount();
         sb.append("MifareClassic block count: ").append(blockCount).append("\n");
         byte[] id = mfc.getTag().getId();
         sb.append("Tag ID: ").append(bytesToHexNpe(id)).append("\n");
+
         String[] techlist = mfc.getTag().getTechList();
         sb.append("Tag Techlist: ").append(Arrays.toString(techlist));
         writeToUiAppend(sb.toString());
@@ -498,6 +501,9 @@ promark keys
 
                  */
 
+                // todo identify Mifare Classic 1K as only allowed tag
+
+                // this will run on Mifare EV1 tags only
                 // see https://blog.linuxgemini.space/derive-pk-of-nxp-mifare-classic-ev1-ecdsa-signature
                 // r can be read on PM3 with the command hf mf rdbl 69 B 4b791bea7bcc
                 // s can be read on PM3 with the command hf mf rdbl 70 B 4b791bea7bcc
