@@ -719,6 +719,7 @@ promark keys
             } else {
                 //return null;
                 Log.d(TAG, "NO Auth success");
+                return null;
             }
 
             // get the blockindex
